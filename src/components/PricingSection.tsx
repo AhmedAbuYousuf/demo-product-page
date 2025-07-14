@@ -8,21 +8,6 @@ const PricingSection = () => {
 
   const plans = [
     {
-      name: "Starter",
-      price: "$29",
-      period: "per month",
-      description: "Perfect for small teams getting started",
-      features: [
-        "Up to 10 team members",
-        "5GB storage",
-        "Basic analytics",
-        "Email support",
-        "Mobile app access",
-        "Core integrations"
-      ],
-      popular: false
-    },
-    {
       name: "Professional",
       price: "$79",
       period: "per month",
@@ -75,7 +60,7 @@ const PricingSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {plans.map((plan, index) => (
             <Card
               key={index}

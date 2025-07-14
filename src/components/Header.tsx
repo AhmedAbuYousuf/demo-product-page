@@ -50,7 +50,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Button 
               variant="hero" 
-              onClick={() => scrollToSection('hero')}
+              onClick={() => window.location.href = '/booking'}
             >
               Get Demo
             </Button>
@@ -91,7 +91,7 @@ const Header = () => {
                 <Button 
                   variant="hero" 
                   className="w-full"
-                  onClick={() => scrollToSection('hero')}
+                  onClick={() => window.location.href = '/booking'}
                 >
                   Get Demo
                 </Button>

@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   Zap, 
   BarChart3, 
@@ -10,7 +11,7 @@ import {
 import { useState } from "react";
 
 const FeaturesSection = () => {
-  const [selectedFeature, setSelectedFeature] = useState(0);
+  const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
 
   const features = [
     {
@@ -66,67 +67,54 @@ const FeaturesSection = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
-          {/* Left Side - Features List */}
-          <div className="space-y-4">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
-                <Card
-                  key={index}
-                  className={`cursor-pointer transition-all duration-300 hover:shadow-card ${
-                    selectedFeature === index 
-                      ? 'border-primary shadow-elegant bg-gradient-to-r from-primary/5 to-primary-glow/5' 
-                      : 'hover:border-primary/50'
-                  }`}
-                  onClick={() => setSelectedFeature(index)}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-center space-x-4">
-                      <div className={`p-3 rounded-lg ${
-                        selectedFeature === index 
-                          ? 'bg-gradient-primary text-primary-foreground' 
-                          : 'bg-muted text-muted-foreground'
-                      }`}>
-                        <IconComponent className="h-6 w-6" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-foreground mb-1">
-                          {feature.title}
-                        </h3>
-                        <p className="text-muted-foreground">
-                          {feature.shortDesc}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
-          {/* Right Side - Feature Description */}
-          <div className="lg:sticky lg:top-32">
-            <Card className="shadow-card">
-              <CardContent className="p-8">
-                <div className="flex items-center space-x-4 mb-6">
-                  <div className="p-4 bg-gradient-primary rounded-lg text-primary-foreground">
-                    {(() => {
-                      const IconComponent = features[selectedFeature].icon;
-                      return <IconComponent className="h-8 w-8" />;
-                    })()}
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => {
+            const IconComponent = feature.icon;
+            return (
+              <Card
+                key={index}
+                className="cursor-pointer transition-all duration-300 hover:shadow-elegant hover:scale-105 hover:border-primary/50"
+                onClick={() => setSelectedFeature(index)}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="p-4 bg-gradient-primary rounded-lg text-primary-foreground mx-auto w-fit mb-4">
+                    <IconComponent className="h-8 w-8" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground">
-                    {features[selectedFeature].title}
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {feature.title}
                   </h3>
-                </div>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  {features[selectedFeature].fullDesc}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
+
+        {/* Feature Description Dialog */}
+        <Dialog open={selectedFeature !== null} onOpenChange={() => setSelectedFeature(null)}>
+          <DialogContent className="max-w-2xl">
+            {selectedFeature !== null && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="flex items-center space-x-4">
+                    <div className="p-3 bg-gradient-primary rounded-lg text-primary-foreground">
+                      {(() => {
+                        const IconComponent = features[selectedFeature].icon;
+                        return <IconComponent className="h-6 w-6" />;
+                      })()}
+                    </div>
+                    <span className="text-2xl">{features[selectedFeature].title}</span>
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="pt-4">
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    {features[selectedFeature].fullDesc}
+                  </p>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
